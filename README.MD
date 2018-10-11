@@ -34,7 +34,7 @@ The statistics that can be retrieved / plotted at the moment are:
 
 # Usage
 
-There are two ways to use the tool, using the CLI, or importing the modules in your project. The later might provide you with more flexibility. **Remember: running the tool might take some time to retrieve the data. Especially if you have a lot of issues! (wait... that sounded weird)**
+There are two ways to use the tool, using the CLI, or importing the modules in your project. The later might provide you with more flexibility. **Remember: running the tool might take some time to retrieve the data. Especially if you have a lot of issues! _(wait... that sounded weird)_**
 
 ## Using the CLI
 
@@ -91,7 +91,7 @@ Some notes:
 
 You can import the tool as a module in your project and use it. An example is demonstrated bellow.
 
-```
+```python
 from gh_issue_stats import GhIssueStats
 
 # config zone
