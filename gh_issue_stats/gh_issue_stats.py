@@ -13,7 +13,7 @@ class GhIssueStats:
         self.nodes = None
 
     def get_issue_nodes(self, date):
-        search_filter = f"first:100, type:ISSUE, query:\"repo:{self.repo} is:issue created:>{date}\""
+        search_filter = f"first:100, type:ISSUE, query:\"repo:{self.repo} is:issue created:>{date} sort:created-asc\""
         search_template = """
 {{
     search ({0}) {{
@@ -74,8 +74,16 @@ class GhIssueStats:
             has_next_page = data['pageInfo']['hasNextPage']
             if has_next_page:
                 after_cursor = data['pageInfo']['endCursor']
-                search_filter = f"first:100, after:\"{after_cursor}\", type:ISSUE, query:\"repo:{self.repo} is:issue created:>{date}\""
+                search_filter = f"first:100, after:\"{after_cursor}\", type:ISSUE, query:\"repo:{self.repo} is:issue created:>{date} sort:created-asc\""
                 query = search_template.format(search_filter)
+            # hack to bypass GHs 1000 issue limit
+            if not has_next_page and (len(nodes) / 1000).is_integer():
+                # get creation timestamp of last issue it was returned
+                issue_creation_timestamp = datetime.strptime(nodes[-1]['createdAt'], '%Y-%m-%dT%H:%M:%S%z')
+                date = issue_creation_timestamp.strftime('%Y-%m-%dT%H:%M:%S%z')
+                search_filter = f"first:100, type:ISSUE, query:\"repo:{self.repo} is:issue created:>{date} sort:created-asc\""
+                query = search_template.format(search_filter)
+                has_next_page = True
         self.nodes = nodes
         return(nodes)
 
