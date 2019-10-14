@@ -1,10 +1,12 @@
 from gh_issue_stats import GhIssueStats
 import argparse
+import os
+from env_default import env_default
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("GitHub Issue Stats PY")
     required_grp = parser.add_argument_group('required arguments')
-    required_grp.add_argument("-t", "--token", help="login token for Github", required=True)
+    required_grp.add_argument("-t", "--token", help="login token for Github", action=env_default('GH_TOKEN'), required=True)
     required_grp.add_argument("-r", "--repository", help="the GH repository we want to parse", required=True)
     required_grp.add_argument("-d", "--date", help="the date we want to start retrieving information. Format: YYYY-MM-DD", required=True)
     parser.add_argument("-e", "--endpoint", help="the GraphQL endpoint to connect to", default="https://api.github.com/graphql")
