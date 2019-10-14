@@ -52,7 +52,7 @@ if __name__ == "__main__":
     if args.author_comments:
         comments_per_author = gh_issue_stats.find_comments_per_author(args.filter_results)
         if args.plot:
-            gh_issue_stats.make_chart(comments_per_author, chart_type="Pie", title="Comments per user", filename="charts/author_comments.html")
+            gh_issue_stats.make_chart(comments_per_author, chart_type="Pie", title="Issue comments per user", filename="charts/author_comments.html")
 
     if args.author_text:
         comment_text_per_author = gh_issue_stats.find_comment_text_per_author(args.author_text, args.filter_results)
