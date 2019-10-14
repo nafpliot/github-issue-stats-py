@@ -1,6 +1,5 @@
 from gh_issue_stats import GhIssueStats
 import argparse
-import os
 from env_default import env_default
 
 if __name__ == "__main__":
