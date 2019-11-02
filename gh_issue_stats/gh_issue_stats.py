@@ -1,6 +1,7 @@
 from .gh_graphql_client import GhGraphQlClient
 import plotly
 import plotly.graph_objs as go
+import plotly.io as pio
 from datetime import datetime
 from collections import Counter
 
@@ -205,4 +206,4 @@ class GhIssueStats:
             raise ValueError(f"Invalid chart type. Expected one of: {chart_types}")
         layout = go.Layout(title=title)
         fig = go.Figure(data=[trace], layout=layout)
-        plotly.offline.plot(fig, filename=filename, auto_open=True)
+        pio.write_html(fig, file=filename, auto_open=False)

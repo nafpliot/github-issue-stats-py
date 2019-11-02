@@ -1,10 +1,11 @@
 from gh_issue_stats import GhIssueStats
 import argparse
+from env_default import env_default
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("GitHub Issue Stats PY")
     required_grp = parser.add_argument_group('required arguments')
-    required_grp.add_argument("-t", "--token", help="login token for Github", required=True)
+    required_grp.add_argument("-t", "--token", help="login token for Github", action=env_default('GH_TOKEN'), required=True)
     required_grp.add_argument("-r", "--repository", help="the GH repository we want to parse", required=True)
     required_grp.add_argument("-d", "--date", help="the date we want to start retrieving information. Format: YYYY-MM-DD", required=True)
     parser.add_argument("-e", "--endpoint", help="the GraphQL endpoint to connect to", default="https://api.github.com/graphql")
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     if args.author_comments:
         comments_per_author = gh_issue_stats.find_comments_per_author(args.filter_results)
         if args.plot:
-            gh_issue_stats.make_chart(comments_per_author, chart_type="Pie", title="Comments per user", filename="charts/author_comments.html")
+            gh_issue_stats.make_chart(comments_per_author, chart_type="Pie", title="Issue comments per user", filename="charts/author_comments.html")
 
     if args.author_text:
         comment_text_per_author = gh_issue_stats.find_comment_text_per_author(args.author_text, args.filter_results)
